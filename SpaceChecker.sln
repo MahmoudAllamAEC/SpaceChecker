@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36518.9
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceChecker", "SpaceChecker\SpaceChecker.csproj", "{401F0422-B06F-4E25-A4D0-0A356CE232B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{401F0422-B06F-4E25-A4D0-0A356CE232B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{401F0422-B06F-4E25-A4D0-0A356CE232B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{401F0422-B06F-4E25-A4D0-0A356CE232B2}.Debug|x64.ActiveCfg = Debug|x64
+		{401F0422-B06F-4E25-A4D0-0A356CE232B2}.Debug|x64.Build.0 = Debug|x64
+		{401F0422-B06F-4E25-A4D0-0A356CE232B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{401F0422-B06F-4E25-A4D0-0A356CE232B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{401F0422-B06F-4E25-A4D0-0A356CE232B2}.Release|x64.ActiveCfg = Release|x64
+		{401F0422-B06F-4E25-A4D0-0A356CE232B2}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3CE3F1BF-95E2-49A2-80D4-BF9E80EBDA36}
+	EndGlobalSection
+EndGlobal
