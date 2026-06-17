@@ -9,7 +9,7 @@
 
 **A Revit API plugin that checks your building's actual spaces against a defined space program — automating one of the most error-prone compliance tasks in residential and commercial AEC projects.**
 
-[▶️ Watch Demo Video](#) • [📥 Download Installer](#) 
+[▶️ Watch Demo Video](https://github.com/MahmoudAllamAEC/SpaceChecker/tree/master) • [📥 Download Installer](https://github.com/MahmoudAllamAEC/SpaceChecker/releases/download/BimDev/Space.Checker.exe) 
 
 </div>
 
@@ -19,7 +19,7 @@
 
 > Click the thumbnail below to watch the full walkthrough
 
-[![Space Checker Demo](https://img.shields.io/badge/▶_Watch_Full_Demo-Google_Drive-red?style=for-the-badge&logo=google-drive)](#)
+[![Space Checker Demo](https://img.shields.io/badge/▶_Watch_Full_Demo-Google_Drive-red?style=for-the-badge&logo=google-drive)](https://github.com/MahmoudAllamAEC/SpaceChecker/tree/master)
 
 <!-- Replace the line below with an actual screenshot of your plugin UI -->
 <!-- ![Space Checker UI](docs/screenshots/ui-preview.png) -->
@@ -61,9 +61,9 @@ In traditional AEC workflows, verifying that a building's rooms comply with a sp
 <!-- Add your actual screenshots below -->
 <!-- Drag screenshots into the repo under docs/screenshots/ then update these paths -->
 
-| Plugin UI | Compliance Results | Room Detail |
+| Plugin UI | Compliance Results | Excel Sheet Detail |
 |---|---|---|
-| ![UI](docs/screenshots/ui-preview.png) | ![Results](docs/screenshots/results.png) | ![Detail](docs/screenshots/room-detail.png) |
+| ![UI](docs/screenshots/Loaded UI.png) | ![Results](docs/screenshots/ComparIson Green UI.png) | ![Detail](docs/screenshots/agreed on sheet.png) |
 
 </div>
 
