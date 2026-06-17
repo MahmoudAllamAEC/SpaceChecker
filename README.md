@@ -19,8 +19,7 @@
 
 > Click the thumbnail below to watch the full walkthrough
 
-[![Space Checker Demo]https://drive.google.com/file/d/18mYa4OjMhKjQa8n76I_xXBR8YzkYmWo8/view?usp=sharing)
-
+[![Space Checker Demo](https://img.shields.io/badge/▶_Watch_Full_Demo-Google_Drive-red?style=for-the-badge&logo=google-drive)](https://drive.google.com/file/d/18mYa4OjMhKjQa8n76I_xXBR8YzkYmWo8/view?usp=sharing)
 <!-- Replace the line below with an actual screenshot of your plugin UI -->
 <!-- ![Space Checker UI](docs/screenshots/ui-preview.png) -->
 
