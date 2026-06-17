@@ -62,7 +62,7 @@ In traditional AEC workflows, verifying that a building's rooms comply with a sp
 
 | Plugin UI | Compliance Results | Excel Sheet Detail |
 |---|---|---|
-| ![UI](docs/screenshots/Loaded UI.png) | ![Results](docs/screenshots/ComparIson Green UI.png) | ![Detail](docs/screenshots/agreed on sheet.png) |
+| ![UI](https://github.com/MahmoudAllamAEC/SpaceChecker/blob/master/Loaded%20UI.png) | ![Results](https://github.com/MahmoudAllamAEC/SpaceChecker/blob/master/ComparIson%20%20Green%20UI.png) | ![Detail](https://github.com/MahmoudAllamAEC/SpaceChecker/blob/master/agreed%20on%20sheet.png) |
 
 </div>
 
