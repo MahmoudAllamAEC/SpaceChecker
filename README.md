@@ -9,7 +9,7 @@
 
 **A Revit API plugin that checks your building's actual spaces against a defined space program — automating one of the most error-prone compliance tasks in residential and commercial AEC projects.**
 
-[▶️ Watch Demo Video](https://github.com/MahmoudAllamAEC/SpaceChecker/tree/master) • [📥 Download Installer](https://github.com/MahmoudAllamAEC/SpaceChecker/releases/download/BimDev/Space.Checker.exe) 
+[▶️ Watch Demo Video](https://drive.google.com/file/d/18mYa4OjMhKjQa8n76I_xXBR8YzkYmWo8/view?usp=sharing) • [📥 Download Installer](https://github.com/MahmoudAllamAEC/SpaceChecker/releases/download/BimDev/Space.Checker.exe) 
 
 </div>
 
@@ -19,7 +19,7 @@
 
 > Click the thumbnail below to watch the full walkthrough
 
-[![Space Checker Demo](https://img.shields.io/badge/▶_Watch_Full_Demo-Google_Drive-red?style=for-the-badge&logo=google-drive)](https://github.com/MahmoudAllamAEC/SpaceChecker/tree/master)
+[![Space Checker Demo]https://drive.google.com/file/d/18mYa4OjMhKjQa8n76I_xXBR8YzkYmWo8/view?usp=sharing)
 
 <!-- Replace the line below with an actual screenshot of your plugin UI -->
 <!-- ![Space Checker UI](docs/screenshots/ui-preview.png) -->
