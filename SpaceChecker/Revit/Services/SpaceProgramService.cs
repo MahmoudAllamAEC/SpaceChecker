@@ -16,17 +16,22 @@ namespace SpaceChecker.Revit.Services
         public Document Doc { get; set; }
         //list of all extracted rooms with its properties
         public List<RoomItem> ExtractedRooms { get; set; } = new List<RoomItem>();
-        //list of all space inside the excel Sheet entries with its properties
-        public List<SpaceProgramEntry> ProgramEntries { get; set; } = new List<SpaceProgramEntry>();
-        //list if each rescult of deviation between  ExtractedRooms and ProgramEntries
-        public List<ComparisonResult> Results { get; set; } = new List<ComparisonResult>();
+        //extracted apartment Areas and the apartment Units they form (rooms mapped in)
+        public List<AreaItem> ExtractedAreas { get; set; } = new List<AreaItem>();
+        public List<UnitItem> Units { get; set; } = new List<UnitItem>();
+        //imported program, keyed by apartment type
+        public List<ProgramApartment> Program { get; set; } = new List<ProgramApartment>();
+        //apartment-level comparison results (drive the master-detail UI)
+        public List<ApartmentCheck> ApartmentResults { get; set; } = new List<ApartmentCheck>();
 
         //this method deletes all list and data to be called at the end of the process as a backup plan
         public void Reset()
         {
             ExtractedRooms.Clear();
-            ProgramEntries.Clear();
-            Results.Clear();
+            ExtractedAreas.Clear();
+            Units.Clear();
+            Program.Clear();
+            ApartmentResults.Clear();
         }
     }
 }

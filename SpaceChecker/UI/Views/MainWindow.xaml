@@ -1,4 +1,3 @@
-﻿
 <Window x:Class="SpaceChecker.UI.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -7,33 +6,244 @@
         xmlns:local="clr-namespace:SpaceChecker.UI.Views"
         xmlns:converters="clr-namespace:SpaceChecker.UI.Converters"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Space Checker" Height="640" Width="800"
+        MinWidth="720" MinHeight="480"
+        Background="#F5F6F8"
+        FontFamily="Segoe UI" FontSize="12">
+
     <Window.Resources>
-        <!--<converters:StatusToColorConverter x:Key="StatusToColorConverter"/>-->
+        <converters:StatusToColorConverter x:Key="StatusColorConverter"/>
 
+        <SolidColorBrush x:Key="Accent"      Color="#1FA9E0"/>
+        <SolidColorBrush x:Key="AccentDark"  Color="#1791C4"/>
+        <SolidColorBrush x:Key="TitleText"   Color="#333333"/>
+        <SolidColorBrush x:Key="PanelBorder" Color="#D7DDE5"/>
+        <SolidColorBrush x:Key="GridHeaderBg" Color="#EEF2F7"/>
+        <SolidColorBrush x:Key="GridHeaderFg" Color="#1F3A5F"/>
+
+        <!-- Flat tool button -->
+        <Style x:Key="FlatButton" TargetType="Button">
+            <Setter Property="MinWidth" Value="96"/>
+            <Setter Property="Padding" Value="12,6"/>
+            <Setter Property="Margin" Value="0,0,8,0"/>
+            <Setter Property="Background" Value="#F8F9FB"/>
+            <Setter Property="BorderBrush" Value="#C6CCD4"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="#2B2B2B"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" CornerRadius="3"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#E8F4FC"/>
+                                <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource Accent}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="bd" Property="Opacity" Value="0.5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Primary (accent) button — the main action -->
+        <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource FlatButton}">
+            <Setter Property="Background" Value="{StaticResource Accent}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="{StaticResource AccentDark}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+        </Style>
+
+        <!-- Column header: light band with an accent underline -->
+        <Style x:Key="GridHeader" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="{StaticResource GridHeaderBg}"/>
+            <Setter Property="Foreground" Value="{StaticResource GridHeaderFg}"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Accent}"/>
+            <Setter Property="BorderThickness" Value="0,0,0,2"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        </Style>
+
+        <Style x:Key="Caption" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#445"/>
+            <Setter Property="Margin" Value="2,0,0,4"/>
+        </Style>
     </Window.Resources>
-    <StackPanel>
 
-        <Button Content="Extract Rooms" Command="{Binding ExtractCommand}" Margin="10"/>
-        <Button Content="Import Program" Command="{Binding ImportCommand}" Margin="10"/>
-        <Button Content="Run Comparison" Command="{Binding RunComparisonCommand}" Margin="10"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>   <!-- header (title + buttons / deviation + status) -->
+            <RowDefinition Height="Auto"/>   <!-- areas caption -->
+            <RowDefinition Height="*"/>      <!-- areas (master) -->
+            <RowDefinition Height="Auto"/>   <!-- rooms caption -->
+            <RowDefinition Height="*"/>      <!-- rooms (detail) -->
+        </Grid.RowDefinitions>
 
-        <DataGrid ItemsSource="{Binding Results}" AutoGenerateColumns="False" IsReadOnly="True">
+        <!-- Header: cyan strip, then a 2x2 grid.
+             Left column = title (top) + deviation (bottom);
+             Right column = buttons (top) + status (bottom) — so the status box
+             starts exactly where the buttons start. -->
+        <Border Grid.Row="0" Background="White" BorderBrush="{StaticResource PanelBorder}" BorderThickness="0,0,0,1">
+            <StackPanel>
+                <Border Height="4" Background="{StaticResource Accent}"/>
+                <Grid Margin="0,4,0,8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Title (top-left) -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Space Checker"
+                               FontSize="25" FontWeight="SemiBold" Foreground="{StaticResource TitleText}"
+                               VerticalAlignment="Center" Margin="14,2,0,2"/>
+
+                    <!-- Buttons (top-right): four equal columns that stretch, so this row
+                         spans the SAME width (same left + right edge) as the status box below.
+                         The last button drops its trailing margin so its right edge lines
+                         up exactly with the status box. -->
+                    <Grid Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="0,2,12,2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Content="Extract Areas"   Command="{Binding ExtractCommand}"        Style="{StaticResource FlatButton}"/>
+                        <Button Grid.Column="1" Content="Import Program"  Command="{Binding ImportCommand}"         Style="{StaticResource FlatButton}"/>
+                        <Button Grid.Column="2" Content="Create Template" Command="{Binding CreateTemplateCommand}" Style="{StaticResource FlatButton}"/>
+                        <Button Grid.Column="3" Content="Export Data"     Command="{Binding ExportDataCommand}"     Style="{StaticResource FlatButton}" Margin="0"/>
+                    </Grid>
+
+                    <!-- Deviation (bottom-left, under the title) -->
+                    <StackPanel Grid.Row="1" Grid.Column="0" Orientation="Horizontal"
+                                VerticalAlignment="Center" Margin="14,6,0,0">
+                        <TextBlock Text="Deviation (%):" VerticalAlignment="Center" Margin="0,0,6,0"/>
+                        <TextBox Width="50" VerticalContentAlignment="Center" Padding="2"
+                                 Text="{Binding AcceptableDeviationPercent, UpdateSourceTrigger=PropertyChanged}"/>
+                    </StackPanel>
+
+                    <!-- Status (bottom-right, starts where the buttons start) -->
+                    <Border Grid.Row="1" Grid.Column="1" Background="White" BorderBrush="{StaticResource PanelBorder}"
+                            BorderThickness="1" CornerRadius="3" Padding="10,5" Margin="0,6,12,0">
+                        <TextBlock Text="{Binding StatusMessage}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                    </Border>
+                </Grid>
+
+                <!-- DRAFT: Run Comparison separated out as a wide, thick primary bar -->
+                <Button Content="Run Comparison" Command="{Binding RunComparisonCommand}"
+                        Style="{StaticResource PrimaryButton}"
+                        Height="44" FontSize="16" Margin="12,0,12,10"
+                        HorizontalAlignment="Stretch"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Areas caption -->
+        <TextBlock Grid.Row="1" Style="{StaticResource Caption}" Margin="14,8,12,4" Text="Areas"/>
+
+        <!-- Master: areas grouped by type (centered header = area name + required) -->
+        <DataGrid Grid.Row="2" Margin="12,0,12,0"
+                  x:Name="AreasGrid" SizeChanged="AreasGrid_SizeChanged"
+                  ItemsSource="{Binding ApartmentsView}"
+                  SelectedItem="{Binding SelectedApartment}"
+                  AutoGenerateColumns="False" IsReadOnly="True"
+                  SelectionMode="Single"
+                  CanUserSortColumns="False"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="#ECECEC"
+                  BorderBrush="{StaticResource PanelBorder}" Background="White"
+                  ColumnHeaderStyle="{StaticResource GridHeader}"
+                  ScrollViewer.CanContentScroll="False"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <!-- green = clean pass, amber = pass but rooms deviate, red = fail -->
+                    <Setter Property="Background" Value="{Binding RowBackground}"/>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.GroupStyle>
+                <GroupStyle>
+                    <GroupStyle.HeaderTemplate>
+                        <DataTemplate>
+                            <Border Background="#E4EEF6" BorderBrush="{StaticResource Accent}"
+                                    BorderThickness="0,0,0,2" Padding="6,6">
+                                <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="13"
+                                           Foreground="{StaticResource GridHeaderFg}" HorizontalAlignment="Center"/>
+                            </Border>
+                        </DataTemplate>
+                    </GroupStyle.HeaderTemplate>
+                </GroupStyle>
+            </DataGrid.GroupStyle>
+            <!-- Fixed pixel widths: star (*) widths collapse under DataGrid grouping. -->
             <DataGrid.Columns>
-                
-                
-                
-                <DataGridTextColumn Header="Room" Binding="{Binding RoomName}" Width="180"/>
-                <DataGridTextColumn Header="Level" Binding="{Binding Level}" Width="110"/>
-                <DataGridTextColumn Header="Required m2" Binding="{Binding RequiredArea , StringFormat=N2}" Width="110"/>
-                <DataGridTextColumn Header="Actual m2" Binding="{Binding ActualArea , StringFormat=N2}" Width="110"/>
-                <DataGridTextColumn Header="Deviation" Binding="{Binding DeviationText}" Width="100"/>
-
-
-
+                <DataGridTextColumn x:Name="InstanceColumn" Header="Instance" Binding="{Binding InstanceLabel}" Width="480" MinWidth="280">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Padding" Value="4,0"/>
+                            <Setter Property="ToolTip" Value="{Binding InstanceLabel}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Actual m²" Binding="{Binding ActualArea, StringFormat=N2}" Width="130"/>
+                <DataGridTextColumn Header="Deviation" Binding="{Binding DeviationText}" Width="130"/>
+                <DataGridTextColumn Header="Pass/Fail" Binding="{Binding PassFail}" Width="110">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="ToolTip" Value="{Binding PassFailTip}"/>
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-    </StackPanel>
-    
+        <!-- Rooms caption (left) + the area type/instance the table is showing (centered) -->
+        <Grid Grid.Row="3" Margin="14,10,12,4">
+            <TextBlock Style="{StaticResource Caption}" Margin="0" Text="Rooms" HorizontalAlignment="Left"/>
+            <TextBlock Text="{Binding SelectedApartment.InstanceLabel}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       FontWeight="SemiBold" Foreground="{StaticResource GridHeaderFg}"
+                       TextTrimming="CharacterEllipsis"/>
+        </Grid>
+
+        <!-- Detail: rooms of selected area -->
+        <DataGrid Grid.Row="4" Margin="12,0,12,12"
+                  ItemsSource="{Binding SelectedApartment.Rooms}"
+                  AutoGenerateColumns="False" IsReadOnly="True"
+                  HeadersVisibility="Column"
+                  GridLinesVisibility="Horizontal"
+                  HorizontalGridLinesBrush="#ECECEC"
+                  BorderBrush="{StaticResource PanelBorder}" Background="White"
+                  ColumnHeaderStyle="{StaticResource GridHeader}"
+                  ScrollViewer.VerticalScrollBarVisibility="Auto">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background"
+                            Value="{Binding Status, Converter={StaticResource StatusColorConverter}}"/>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Room" Binding="{Binding RoomName}" Width="*"/>
+                <DataGridTextColumn Header="Required m²" Binding="{Binding RequiredAreaText}" Width="*"/>
+                <DataGridTextColumn Header="Actual m²" Binding="{Binding ActualArea, StringFormat=N2}" Width="*"/>
+                <DataGridTextColumn Header="Deviation" Binding="{Binding DeviationText}" Width="*"/>
+                <DataGridTextColumn Header="Pass/Fail" Binding="{Binding PassFail}" Width="0.6*"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
 </Window>

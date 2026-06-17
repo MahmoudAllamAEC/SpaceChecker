@@ -32,6 +32,10 @@ namespace SpaceChecker.Revit.Entry
         /// <returns></returns>
         public Result OnStartup(UIControlledApplication uicApp)
         {
+            // Make sure our bundled EPPlus (and its deps) can be found at runtime,
+            // regardless of how Revit loaded this add-in. See DependencyResolver.
+            DependencyResolver.Register();
+
             string tabName = "AACD Architect";
             string panelName = "General";
             string addinName = "Space Checker";
@@ -65,12 +69,15 @@ namespace SpaceChecker.Revit.Entry
             PushButton pb_ExtCmd = panel.AddItem(pbData_ExtCmd) as PushButton;
             pb_ExtCmd.ToolTip = toolTip;
 
+
            
 
-            // Button Image:
-            string image_EmbeddedPath = $"{assemblyName}.Resources.icons8-data-sheet-32.png";
-            pb_ExtCmd.LargeImage = getImageSource(image_EmbeddedPath);
-            pb_ExtCmd.Image = getImageSource($"{ assemblyName}.Resources.icons8-sheet-16.png");
+            // Button Image: use the big 32px icon for both the large and small
+            // ribbon slots so the Revit UI always shows the larger icon.
+            string image_EmbeddedPath = $"{assemblyName}.Resources.icons8-floor-plan-32.png";
+            pb_ExtCmd.LargeImage = getImageSource($"{assemblyName}.Resources.icons8-floor-plan-24.png");
+            pb_ExtCmd.Image = getImageSource(image_EmbeddedPath);
+
 
             return Result.Succeeded;
         }

@@ -16,19 +16,11 @@ namespace SpaceChecker.UI.Converters
         {
             if (value is ComplianceStatus status)
             {
-                switch (status)
-                {
-                    case ComplianceStatus.Met:
-                        return new SolidColorBrush(Color.FromRgb(209, 250, 229));
-                    case ComplianceStatus.Over:
-                        return new SolidColorBrush(Color.FromRgb(254, 243, 199));
-                    case ComplianceStatus.Under:
-                        return new SolidColorBrush(Color.FromRgb(254, 226, 226));
-                    case ComplianceStatus.Unmatched:
-                        return new SolidColorBrush(Color.FromRgb(243, 244, 246));
-                    default:
-                        return Brushes.Transparent;
-                }
+                // Pass (within tolerance) -> green; anything else
+                // (Over / Under / Unmatched) counts as a fail -> red.
+                return status == ComplianceStatus.Met
+                    ? new SolidColorBrush(Color.FromRgb(209, 250, 229))   // light green
+                    : new SolidColorBrush(Color.FromRgb(254, 226, 226));  // light red
             }
             return Brushes.Transparent;
         }
